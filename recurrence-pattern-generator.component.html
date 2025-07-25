@@ -1,0 +1,51 @@
+<div class="recurrence-form card">
+  <h2 class="form-title">Part 2: Recurrence Pattern Generator</h2>
+
+  <div class="form-group">
+    <label for="recurrencePattern">Recurrence Pattern</label>
+    <select id="recurrencePattern" [(ngModel)]="pattern" (change)="onPatternChange($event)">
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="timeInput">Time</label>
+    <input
+      id="timeInput"
+      type="time"
+      [(ngModel)]="time"
+      (change)="onTimeChange($event)"
+    />
+  </div>
+
+  <div *ngIf="pattern === 'weekly'" class="form-group">
+    <label>Days of Week</label>
+    <div class="checkbox-group">
+      <div *ngFor="let day of weekdays" class="checkbox-item">
+        <input
+          type="checkbox"
+          [id]="day"
+          [checked]="selectedDays[day]"
+          (change)="toggleDay(day)"
+        />
+        <label [for]="day">{{ day | titlecase }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="pattern === 'monthly'" class="form-group">
+    <label for="dayOfMonth">Day of Month</label>
+    <select id="dayOfMonth" [(ngModel)]="date" (change)="onDateChange($event)">
+      <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">
+        {{ i + 1 }}
+      </option>
+    </select>
+  </div>
+
+  <div class="description-box">
+    <h4 style="font-size: 1.5rem;"><strong>Generated Description:</strong></h4>
+    <p style="font-size: 1.2rem;">{{ description }}</p>
+  </div>
+</div>
